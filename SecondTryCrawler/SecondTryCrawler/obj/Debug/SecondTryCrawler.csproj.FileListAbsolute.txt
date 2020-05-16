@@ -1,0 +1,14 @@
+C:\Users\mariu\Documents\GitHub\New\WebCrawlerWithRestSharp\SecondTryCrawler\SecondTryCrawler\bin\Debug\SecondTryCrawler.exe.config
+C:\Users\mariu\Documents\GitHub\New\WebCrawlerWithRestSharp\SecondTryCrawler\SecondTryCrawler\bin\Debug\SecondTryCrawler.exe
+C:\Users\mariu\Documents\GitHub\New\WebCrawlerWithRestSharp\SecondTryCrawler\SecondTryCrawler\bin\Debug\SecondTryCrawler.pdb
+C:\Users\mariu\Documents\GitHub\New\WebCrawlerWithRestSharp\SecondTryCrawler\SecondTryCrawler\obj\Debug\SecondTryCrawler.csprojAssemblyReference.cache
+C:\Users\mariu\Documents\GitHub\New\WebCrawlerWithRestSharp\SecondTryCrawler\SecondTryCrawler\obj\Debug\SecondTryCrawler.csproj.CoreCompileInputs.cache
+C:\Users\mariu\Documents\GitHub\New\WebCrawlerWithRestSharp\SecondTryCrawler\SecondTryCrawler\obj\Debug\SecondTryCrawler.exe
+C:\Users\mariu\Documents\GitHub\New\WebCrawlerWithRestSharp\SecondTryCrawler\SecondTryCrawler\obj\Debug\SecondTryCrawler.pdb
+C:\Users\mariu\Documents\GitHub\New\WebCrawlerWithRestSharp\SecondTryCrawler\SecondTryCrawler\bin\Debug\RestSharp.dll
+C:\Users\mariu\Documents\GitHub\New\WebCrawlerWithRestSharp\SecondTryCrawler\SecondTryCrawler\bin\Debug\RestSharp.xml
+C:\Users\mariu\Documents\GitHub\New\WebCrawlerWithRestSharp\SecondTryCrawler\SecondTryCrawler\obj\Debug\SecondTryCrawler.csproj.CopyComplete
+C:\Users\mariu\Documents\GitHub\New\WebCrawlerWithRestSharp\SecondTryCrawler\SecondTryCrawler\bin\Debug\Newtonsoft.Json.dll
+C:\Users\mariu\Documents\GitHub\New\WebCrawlerWithRestSharp\SecondTryCrawler\SecondTryCrawler\bin\Debug\PayPal.dll
+C:\Users\mariu\Documents\GitHub\New\WebCrawlerWithRestSharp\SecondTryCrawler\SecondTryCrawler\bin\Debug\Newtonsoft.Json.xml
+C:\Users\mariu\Documents\GitHub\New\WebCrawlerWithRestSharp\SecondTryCrawler\SecondTryCrawler\bin\Debug\PayPal.xml
