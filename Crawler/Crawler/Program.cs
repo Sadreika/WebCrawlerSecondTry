@@ -70,6 +70,8 @@ namespace SecondTryCrawler
 
             try
             {
+                client.QueryString.Add("param1", "value1");
+                client.QueryString.Add("param2", "value2");
                 string data = client.DownloadString(urlAddress);
 
                 WebHeaderCollection myWebHeaderCollection = client.ResponseHeaders;
@@ -92,7 +94,7 @@ namespace SecondTryCrawler
         {
             int methodRecursion = 1;
             Program crawlerObject = new Program();
-            string urlAddress = "https://www.ezys.lt/";
+            string urlAddress = "https://en.autogidas.lt/";
             while (methodRecursion == 1)
             {
                 methodRecursion = crawlerObject.crawling(urlAddress);
