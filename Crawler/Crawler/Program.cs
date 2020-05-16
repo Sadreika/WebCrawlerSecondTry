@@ -29,7 +29,7 @@ namespace SecondTryCrawler
 
         public int crawling(String urlAddress)
         {
-            
+
             RestClient client = new RestClient(urlAddress);
             client.AddDefaultHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101 Firefox/76.0;)");
             client.AddDefaultHeader("Accept-Language", "en-GB,en;q=0.5");
@@ -41,7 +41,7 @@ namespace SecondTryCrawler
             client.CookieContainer = cookieContainer;
 
             var request = new RestRequest("", Method.GET);
-            
+
             try
             {
                 var response = client.Execute(request).Content;
