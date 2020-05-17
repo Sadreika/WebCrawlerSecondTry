@@ -4,6 +4,7 @@ using System.Net;
 using System.Net.Http;
 using System.Security.Policy;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Web.Configuration;
 
 namespace SecondTryCrawler
@@ -65,18 +66,40 @@ namespace SecondTryCrawler
             Console.WriteLine("INFO ABOUT HEADER\n" + client.Headers);
 
             string[] proxyInfo = new_proxy.Split(':');
-            client.Proxy = new WebProxy(proxyInfo[0], Int32.Parse(proxyInfo[1]));
+            //client.Proxy = new WebProxy(proxyInfo[0], Int32.Parse(proxyInfo[1]));
             Console.WriteLine("PROXY\n" + proxyInfo[0] + " " + Int32.Parse(proxyInfo[1]));
 
+            string marke = "Alpina";
+            string modelis = "";
+            string kaina_nuo = "";
+            string kaina_iki = "";
+            string metai_nuo = "";
+            string metai_iki = "";
+            string kebulas = "";
+            string kuro_tipas = "";
+            
+            string newUrl = urlAddress;
+            newUrl = newUrl + "?f_1%5B0%5D=" + marke + "&f_model_14%5B0%5D=" + modelis + "&f_215=" + kaina_nuo
+                + "&f_216=" + kaina_iki + "&f_41=" + metai_nuo + "&f_42=" + metai_iki + "&f_3%5B1%5D=" + kebulas + "&f_2%5B2%5D=" +kuro_tipas + "&f_376= HTTP/1.1";
+           // Console.WriteLine(newUrl);
+
+            string pattern = @"\b[M]\W+";
+            Regex createRegex = new Regex(pattern);
+            
             try
             {
-                client.QueryString.Add("param1", "value1");
-                client.QueryString.Add("param2", "value2");
-                string data = client.DownloadString(urlAddress);
+               // client.QueryString.Add("param1", "value1");
+               // client.QueryString.Add("param2", "value2");
+                string data = client.DownloadString(newUrl);
+
+                MatchCollection matchedCars = createRegex.Matches(data);
+                
+                for (int count = 0; count < matchedCars.Count; count++)
+                    Console.WriteLine(matchedCars[count].Value);
 
                 WebHeaderCollection myWebHeaderCollection = client.ResponseHeaders;
-                for (int i = 0; i < myWebHeaderCollection.Count; i++)
-                    Console.WriteLine("\t" + myWebHeaderCollection.GetKey(i) + " = " + myWebHeaderCollection.Get(i));
+               /* for (int i = 0; i < myWebHeaderCollection.Count; i++)
+                    Console.WriteLine("\t" + myWebHeaderCollection.GetKey(i) + " = " + myWebHeaderCollection.Get(i));*/
 
                 Console.WriteLine("Duomenys\n" + data);
                 return 0;
@@ -94,7 +117,7 @@ namespace SecondTryCrawler
         {
             int methodRecursion = 1;
             Program crawlerObject = new Program();
-            string urlAddress = "https://en.autogidas.lt/";
+            string urlAddress = "https://en.autogidas.lt/skelbimai/automobiliai/";
             while (methodRecursion == 1)
             {
                 methodRecursion = crawlerObject.crawling(urlAddress);
