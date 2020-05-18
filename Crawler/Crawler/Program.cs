@@ -36,10 +36,9 @@ namespace SecondTryCrawler
             try
             {
                 string data = client.DownloadString(newUrlAddress);
-                //Console.WriteLine(data);
+                client.DownloadFile(newUrlAddress, @"C:\Users\mariu\Desktop\localfile.html"); 
                 Console.WriteLine(newUrlAddress);
- 
-
+                Console.WriteLine(data);
 
                 // MatchCollection matchedCars = createRegex.Matches(data);
 
@@ -77,7 +76,7 @@ namespace SecondTryCrawler
 
             int days = scObject.gettingDate();
 
-            for (int i = 29; i < days + 1; i++) // reikes pakeisti 29 i 1 
+            for (int i = 30; i < days; i++) // reikes pakeisti (int i = 1; i < days + 1; i++)
             {
                 string departure_day = i.ToString();
                 string newUrlAddress = scObject.createUrl(departure_day);

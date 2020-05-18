@@ -6,18 +6,18 @@ namespace Crawler
     {
         private string urlAddress = "https://www.latam.com/en_un/";
 
-        private string departure_year_month = "2020-06";
-        private string departure_day = "11";
-        private string return_year_month = "2020-06";
+        private string departure_year_month = "2020-08";
+        private string departure_day = "25";
+        private string return_year_month = "2020-08";
         private string return_day = "18";
 
-        private string city_code = "VNO";
-        private string second_city_code = "MIL";
-        private string city = "Milan";
-        private string second_city = "Vilnius";
+        private string city_code = "AKL";
+        private string second_city_code = "SYD";
+        private string city = "Auckland";
+        private string second_city = "Sydney";
 
-        private string full_departure_date = "/06/2020";
-        private string full_return_date = "/06/2020";
+        private string full_departure_date = "/08/2020";
+        private string full_return_date = "/08/2020";
 
         private string flightClass = "Y";
         private string adult_count = "1";
