@@ -1,12 +1,7 @@
-﻿using System;
+﻿using Crawler;
+using System;
 using System.Collections.Specialized;
-using System.IO;
 using System.Net;
-using System.Net.Http;
-using System.Security.Policy;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Web.Configuration;
 
 namespace SecondTryCrawler
 {
@@ -41,8 +36,9 @@ namespace SecondTryCrawler
             try
             {
                 string data = client.DownloadString(newUrlAddress);
-                // Console.WriteLine(data);
+                //Console.WriteLine(data);
                 Console.WriteLine(newUrlAddress);
+ 
 
 
                 // MatchCollection matchedCars = createRegex.Matches(data);
@@ -77,46 +73,15 @@ namespace SecondTryCrawler
         {
             int methodRecursion = 1;
             Program crawlerObject = new Program();
-            string urlAddress = "https://www.latam.com/en_un/";
+            Sc scObject = new Sc();
 
-            string departure_year_month = "2020-06";
-            string return_year_month = "2020-06";
-            string[] splitedDate = departure_year_month.Split('-');
-            int days = DateTime.DaysInMonth(Int16.Parse(splitedDate[0]), Int16.Parse(splitedDate[1]));
+            int days = scObject.gettingDate();
 
-            string departure_day = "11";
-
-            string return_day = "18";
-
-            string city_code = "VNO";
-            string second_city_code = "MIL";
-            string city = "Milan";
-            string second_city = "Vilnius";
-
-            string full_departure_date = "/06/2020";
-            string full_return_date = "/06/2020";
-
-            string flightClass = "Y";
-            string adult_count = "1";
-            string children_count = "0";
-
-            string newUrlAddress = "";
-
-            for (int i = 1; i < days + 1; i++)
+            for (int i = 29; i < days + 1; i++) // reikes pakeisti 29 i 1 
             {
-                departure_day = i.ToString();
-
-                newUrlAddress = urlAddress + "apps/personas/booking?" + "fecha1_dia=" +
-                departure_day + "&fecha1_anomes=" + departure_year_month + "&fecha2_dia=" +
-                return_day + "&fecha2_anomes=" + return_year_month + "&from_city2=" +
-                city_code + "&to_city2=" + second_city_code +
-                "&auAvailability=1&ida_vuelta=ida&vuelos_origen=" +
-                city + "&from_city1=" + city_code + "&vuelos_destino=" +
-                second_city + "&to_city1=" + second_city_code + "&flex=1&vuelos_fecha_salida_ddmmaaaa=" + departure_day +
-                full_departure_date + "&vuelos_fecha_regreso_ddmmaaaa=" + return_day + full_return_date +
-                "&cabina=" + flightClass + "&nadults=" + adult_count + "&nchildren=" +
-                children_count + "&ninfants=0&cod_promo=&stopover_outbound_days=0&stopover_inbound_days=0&application=#/";
-
+                string departure_day = i.ToString();
+                string newUrlAddress = scObject.createUrl(departure_day);
+               
                 methodRecursion = crawlerObject.crawling(newUrlAddress);
 
                 if (methodRecursion == 1)
@@ -124,7 +89,6 @@ namespace SecondTryCrawler
                     methodRecursion = crawlerObject.crawling(newUrlAddress);
                 }
             }
-
             Console.WriteLine("END");
         }
     }
