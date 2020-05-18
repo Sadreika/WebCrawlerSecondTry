@@ -33,12 +33,20 @@ namespace SecondTryCrawler
             //string pattern = @"\b[M]\W+";
             //Regex createRegex = new Regex(pattern);
 
+            
             try
             {
-                string data = client.DownloadString(newUrlAddress);
-                client.DownloadFile(newUrlAddress, @"C:\Users\mariu\Desktop\localfile.html"); 
-                Console.WriteLine(newUrlAddress);
-                Console.WriteLine(data);
+
+                System.IO.Stream stream = client.OpenRead(newUrlAddress);
+                using (System.IO.StreamReader reader = new System.IO.StreamReader(stream))
+                {
+                    String text = reader.ReadToEnd();
+                }
+
+                //string data = client.DownloadString(newUrlAddress);
+                //client.DownloadFile(newUrlAddress, @"C:\Users\mariu\Desktop\localfile.html"); 
+                //Console.WriteLine(newUrlAddress);
+                //Console.WriteLine(data);
 
                 // MatchCollection matchedCars = createRegex.Matches(data);
 
