@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Specialized;
 using System.IO;
 using System.Net;
 using System.Net.Http;
@@ -12,104 +13,63 @@ namespace SecondTryCrawler
     public class Program
     {
         public int triesToConnect = 0;
-        public int proxy_number = 0;
-        public String proxyChange()
+        public int crawling(String newUrlAddress)
         {
-            String proxy = "";
-            try
-            {
-                string[] lines = System.IO.File.ReadAllLines(@"C:\Users\mariu\Documents\GitHub\New\WebCrawlertest0.1\WebCrawlerv0.1\Proxy.txt"); // proxiu sarasas
-                proxy = lines[proxy_number];
-            }
-            catch (Exception fileException)
-            {
-                Console.WriteLine("FILE ERROR");
-                proxy = null;
-            }
-            return proxy;
-        }
-
-
-        public int crawling(String urlAddress)
-        {
-            String new_proxy = proxyChange();
-            if (new_proxy == null)
-            {
-                System.Environment.Exit(0);
-            }
-            else
-            {
-                if (triesToConnect == 2)
-                {
-                    proxy_number = proxy_number + 1;
-                    new_proxy = proxyChange();
-                    if (new_proxy == null)
-                    {
-                        System.Environment.Exit(0);
-                    }
-                    else
-                    {
-                        triesToConnect = 0;
-                    }
-                }
-                Console.WriteLine((triesToConnect + 1) + " TRY");
-            }
-
             WebClient client = new WebClient();
 
-            client.Headers.Set("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101 Firefox/76.0");
-            
-            client.Headers.Set("Accept-Language", "en-GB,en;q=0.5");
-            client.Headers.Set("Accept", "application/json, text/plain, */*");
+            NameValueCollection myNameValueCollection = new NameValueCollection();
 
-            
-            Console.WriteLine("INFO ABOUT HEADER\n" + client.Headers);
+            String[] valueArray = null;
 
-            string[] proxyInfo = new_proxy.Split(':');
-            //client.Proxy = new WebProxy(proxyInfo[0], Int32.Parse(proxyInfo[1]));
-            Console.WriteLine("PROXY\n" + proxyInfo[0] + " " + Int32.Parse(proxyInfo[1]));
+            myNameValueCollection.Add("Host", "www.latam.com");
+            myNameValueCollection.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101 Firefox/76.0");
+            myNameValueCollection.Add("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
+            myNameValueCollection.Add("Accept-Language", "en-GB,en;q=0.5");
 
-            string marke = "Alpina";
-            string modelis = "";
-            string kaina_nuo = "";
-            string kaina_iki = "";
-            string metai_nuo = "";
-            string metai_iki = "";
-            string kebulas = "";
-            string kuro_tipas = "";
-            
-            string newUrl = urlAddress;
-            newUrl = newUrl + "?f_1%5B0%5D=" + marke + "&f_model_14%5B0%5D=" + modelis + "&f_215=" + kaina_nuo
-                + "&f_216=" + kaina_iki + "&f_41=" + metai_nuo + "&f_42=" + metai_iki + "&f_3%5B1%5D=" + kebulas + "&f_2%5B2%5D=" +kuro_tipas + "&f_376= HTTP/1.1";
-           // Console.WriteLine(newUrl);
+            foreach(String key in myNameValueCollection.Keys)
+            {
+                valueArray = myNameValueCollection.GetValues(key);
+                foreach(String value in valueArray)
+                {
+                    client.Headers.Set(key, value); 
+                }
+            }
 
-            string pattern = @"\b[M]\W+";
-            Regex createRegex = new Regex(pattern);
-            
+            //string pattern = @"\b[M]\W+";
+            //Regex createRegex = new Regex(pattern);
+
             try
             {
-               // client.QueryString.Add("param1", "value1");
-               // client.QueryString.Add("param2", "value2");
-                string data = client.DownloadString(newUrl);
+                string data = client.DownloadString(newUrlAddress);
+                // Console.WriteLine(data);
+                Console.WriteLine(newUrlAddress);
 
-                MatchCollection matchedCars = createRegex.Matches(data);
-                
-                for (int count = 0; count < matchedCars.Count; count++)
-                    Console.WriteLine(matchedCars[count].Value);
 
-                WebHeaderCollection myWebHeaderCollection = client.ResponseHeaders;
-               /* for (int i = 0; i < myWebHeaderCollection.Count; i++)
-                    Console.WriteLine("\t" + myWebHeaderCollection.GetKey(i) + " = " + myWebHeaderCollection.Get(i));*/
+                // MatchCollection matchedCars = createRegex.Matches(data);
 
-                Console.WriteLine("Duomenys\n" + data);
+                /*   for (int count = 0; count < matchedCars.Count; count++)
+                       Console.WriteLine(matchedCars[count].Value); */
+
+                /*WebHeaderCollection myWebHeaderCollection = client.ResponseHeaders;
+                for (int i = 0; i < myWebHeaderCollection.Count; i++)
+                    Console.WriteLine("\t" + myWebHeaderCollection.GetKey(i) + " = " + myWebHeaderCollection.Get(i));
+
+                Console.WriteLine("Duomenys\n" + data);*/
                 return 0;
 
             }
             catch (Exception response_exception)
             {
-                triesToConnect = triesToConnect + 1;
                 Console.WriteLine("ERROR\n" + response_exception);
-                return 1;
+                triesToConnect = triesToConnect + 1;
+                if(triesToConnect == 1)
+                {
+                    return 0;
+                }
+                else
+                {
+                    return 1;
+                }
             }
         }
 
@@ -117,19 +77,55 @@ namespace SecondTryCrawler
         {
             int methodRecursion = 1;
             Program crawlerObject = new Program();
-            string urlAddress = "https://en.autogidas.lt/skelbimai/automobiliai/";
-            while (methodRecursion == 1)
+            string urlAddress = "https://www.latam.com/en_un/";
+
+            string departure_year_month = "2020-06";
+            string return_year_month = "2020-06";
+            string[] splitedDate = departure_year_month.Split('-');
+            int days = DateTime.DaysInMonth(Int16.Parse(splitedDate[0]), Int16.Parse(splitedDate[1]));
+
+            string departure_day = "11";
+
+            string return_day = "18";
+
+            string city_code = "VNO";
+            string second_city_code = "MIL";
+            string city = "Milan";
+            string second_city = "Vilnius";
+
+            string full_departure_date = "/06/2020";
+            string full_return_date = "/06/2020";
+
+            string flightClass = "Y";
+            string adult_count = "1";
+            string children_count = "0";
+
+            string newUrlAddress = "";
+
+            for (int i = 1; i < days + 1; i++)
             {
-                methodRecursion = crawlerObject.crawling(urlAddress);
+                departure_day = i.ToString();
+
+                newUrlAddress = urlAddress + "apps/personas/booking?" + "fecha1_dia=" +
+                departure_day + "&fecha1_anomes=" + departure_year_month + "&fecha2_dia=" +
+                return_day + "&fecha2_anomes=" + return_year_month + "&from_city2=" +
+                city_code + "&to_city2=" + second_city_code +
+                "&auAvailability=1&ida_vuelta=ida&vuelos_origen=" +
+                city + "&from_city1=" + city_code + "&vuelos_destino=" +
+                second_city + "&to_city1=" + second_city_code + "&flex=1&vuelos_fecha_salida_ddmmaaaa=" + departure_day +
+                full_departure_date + "&vuelos_fecha_regreso_ddmmaaaa=" + return_day + full_return_date +
+                "&cabina=" + flightClass + "&nadults=" + adult_count + "&nchildren=" +
+                children_count + "&ninfants=0&cod_promo=&stopover_outbound_days=0&stopover_inbound_days=0&application=#/";
+
+                methodRecursion = crawlerObject.crawling(newUrlAddress);
+
+                if (methodRecursion == 1)
+                {
+                    methodRecursion = crawlerObject.crawling(newUrlAddress);
+                }
             }
+
             Console.WriteLine("END");
         }
     }
 }
-// client.Headers.Set("Accept-Encoding", "gzip, deflate, br");
-// client.Headers.Set(HttpRequestHeader.Cookie, "MUID=");
-// client.Headers.Set(HttpRequestHeader.Cookie, "cf_clearance=");
-// client.Headers.Set(HttpRequestHeader.Cookie, "__cfduid=");
-// client.Headers.Set(HttpRequestHeader.Cookie, "ASP.NET_SessionId=");
-// client.Headers.Set("__RequestVerificationToken", "X0kk1RIYeYSnHf3iX-tS1E__veNA1-F9JUXk0D-kFjsjDM17QOyEV8zWHWWtO5svxzSAjTcKYLwMXDn46e-rAN39EEk1");
-// client.Headers.Set("forterToken", "c472c17dbe8a458f8babc3299ba99403_1589618250040_15450_UDF43_9ck");
